@@ -2,7 +2,7 @@ import { SearchBox } from "./search-box";
 import { TableList } from "./table-list";
 import React, { useState, useEffect } from "react";
 import * as qs from 'qs'
-import { paramObj } from "../../utils";
+import { paramObj, useDebounce } from "../../utils";
 
 
 
@@ -15,16 +15,17 @@ export const ProjectList = () => {
   });
 
   const [list, setList] = useState([]);
+  const paramDebounce = useDebounce(param, 1000)
 
   useEffect(() => {
-    fetch(`${apiUrl}/projects?${qs.stringify(paramObj(param))}`).then(async (res) => {
+    fetch(`${apiUrl}/projects?${qs.stringify(paramObj(paramDebounce))}`).then(async (res) => {
       if (res.ok) {
         setList(await res.json());
       }
     });
-  }, [param]);
+  }, [paramDebounce]);
 
-  return (
+  return  (
     <div>
       <SearchBox param={param} setParam={setParam}></SearchBox>
       <TableList list={list}></TableList>

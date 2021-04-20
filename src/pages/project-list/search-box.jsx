@@ -1,17 +1,20 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
+import { useMounted } from "../../utils";
 
+const apiUrl = process.env.REACT_APP_API_URL;
 
-const apiUrl = process.env.REACT_APP_API_URL
-console.log(process.env);
 export const SearchBox = ({ param, setParam }) => {
   const [users, setUsers] = useState([]);
-  useEffect(() => {
-    fetch(`${apiUrl}/users`).then(async res=>{
-      if(res.ok){
-        setUsers(await res.json())
+
+  const getProjects = () => {
+    fetch(`${apiUrl}/users`).then(async (res) => {
+      if (res.ok) {
+        setUsers(await res.json());
       }
-    })
-  }, [])
+    });
+  };
+
+  useMounted(() => getProjects());
 
   return (
     <form>
@@ -28,10 +31,13 @@ export const SearchBox = ({ param, setParam }) => {
           setParam({ ...param, personId: e.target.value });
         }}
       >
-        {
-          users.map(user => <option key={user.id} value={user.id}>{user.name}</option>)
-        }
+        {users.map((user) => (
+          <option key={user.id} value={user.id}>
+            {user.name}
+          </option>
+        ))}
       </select>
     </form>
   );
 };
+
