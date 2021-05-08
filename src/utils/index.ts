@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const paramObj = (params) => {
+export const paramObj = (params: any) : any => {
   const result = { ...params };
   Object.keys(result).forEach((key) => {
     const value = result[key];
@@ -11,15 +11,15 @@ export const paramObj = (params) => {
   return result;
 };
 
-export const isNull = (value) => (value === 0 ? false : !value);
+export const isNull = (value: unknown) : boolean => (value === 0 ? false : !value);
 
-export const useMounted = (callback) => {
+export const useMounted = (callback: () => void) => {
   useEffect(() => {
     callback();
   }, []);
 };
 
-export const useDebounce = (value, delay) => {
+export const useDebounce = (value: unknown, delay?: number) : any => {
   const [debounceValue, setDebounceValue] = useState(value);
   useEffect(() => {
     const timer = setTimeout(() => setDebounceValue(value), delay);

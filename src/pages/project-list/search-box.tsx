@@ -1,9 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useMounted } from "../../utils";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-export const SearchBox = ({ param, setParam }) => {
+interface searchProp {
+  param: {
+    name: string;
+    personId: string;
+  };
+  setParam: (param: searchProp["param"]) => void;
+}
+
+interface User {
+  id: string;
+  name: string;
+}
+
+export const SearchBox = ({ param, setParam }: searchProp) => {
   const [users, setUsers] = useState([]);
 
   const getProjects = () => {
@@ -31,7 +44,7 @@ export const SearchBox = ({ param, setParam }) => {
           setParam({ ...param, personId: e.target.value });
         }}
       >
-        {users.map((user) => (
+        {users.map((user: User) => (
           <option key={user.id} value={user.id}>
             {user.name}
           </option>
@@ -40,4 +53,3 @@ export const SearchBox = ({ param, setParam }) => {
     </form>
   );
 };
-

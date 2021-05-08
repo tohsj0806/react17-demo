@@ -8,6 +8,9 @@ import { paramObj, useDebounce } from "../../utils";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
+
+
+
 export const ProjectList = () => {
   const [param, setParam] = useState({
     name: "",
@@ -15,7 +18,7 @@ export const ProjectList = () => {
   });
 
   const [list, setList] = useState([]);
-  const paramDebounce = useDebounce(param, 1000)
+  const paramDebounce = useDebounce(param, 200)
 
   useEffect(() => {
     fetch(`${apiUrl}/projects?${qs.stringify(paramObj(paramDebounce))}`).then(async (res) => {

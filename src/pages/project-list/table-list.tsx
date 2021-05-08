@@ -1,4 +1,4 @@
-export const TableList = ({ list }) => {
+export const TableList = ({ list }: listProp) => {
   return (
     <table>
       <thead>
@@ -8,7 +8,7 @@ export const TableList = ({ list }) => {
         </tr>
       </thead>
       <tbody>
-        {list.map((item) => (
+        {list.map((item: dataItem) => (
           <tr key={item.id}>
             <td>{item.name}</td>
             <td>{item.personName}</td>
@@ -18,3 +18,13 @@ export const TableList = ({ list }) => {
     </table>
   );
 };
+
+interface listProp {
+  list: dataItem[];
+}
+
+interface dataItem {
+  id: string;
+  name: string;
+  personName: string;
+}
